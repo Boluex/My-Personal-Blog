@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from.models import post,comment
 from django.contrib import messages
+from django.urls import reverse
 from.forms import renew,change
 from django.http import HttpResponse
 # Create your views here.
@@ -9,13 +10,17 @@ def create(request):
         title=request.POST.get('title')
         content=request.POST.get('content')
         user=request.user
-        store= post(author=user,title=title,content=content)
-        store.save()
         pic=request.FILES.get('pic')
-        grab=post(author=user,image=pic)
-        grab.save()
-        messages.success(request,'Created successfully')
-        return redirect('/')
+        if pic is not None:
+            store= post(author=user,title=title,content=content,image=pic)
+            store.save()
+            messages.success(request,'Created successfully')
+            return redirect('/')
+        else:
+            store= post(author=user,title=title,content=content )
+            store.save()
+            messages.success(request,'Created successfully')
+            return redirect('/')
     return render(request,'blog/create.html')
 def home(request):
     posts=post.objects.all().order_by('-date_posted')
@@ -65,6 +70,23 @@ def add_comment(request,id):
         return redirect('/')
     else:
         return HttpResponse('Not a POST method')
+    
+
+def destroy(request,id):
+    get_comment=comment.objects.get(id=id)
+    get_comment_post=get_comment.posts.pk
+    # get_post=post.objects.get(id=get_comment_post)
+    if get_comment.author == request.user or request.user.is_staff:
+        get_comment.delete()
+        messages.success(request,'You just deleted this comment')
+        # return redirect(reverse(comments,args=get_comment_post))
+        # return redirect('comment',post_id=get_comment_post)
+        return redirect('/')
+    else:
+        messages.error(request,'Permission denied')
+        # return redirect(reverse(comments,args=get_post.pk))
+        # return redirect('comment',post_id=get_comment_post)
+        return redirect('/')
 
 
 def new_update(request,id):
@@ -83,10 +105,10 @@ def new_update(request,id):
     return render(request,'blog/comment_update.html',{'form':form})
 
 
-def destroy(request,id):
-    grab = get_object_or_404(comment, id=id)
-    if request.user == grab.author:
-        grab.delete()
-        return redirect('/')
-    else:
-        messages.error(request, 'Access denied')
+# def destroy(request,id):
+#     grab = get_object_or_404(comment, id=id)
+#     if request.user == grab.author:
+#         grab.delete()
+#         return redirect('/')
+#     else:
+#         messages.error(request, 'Access denied')

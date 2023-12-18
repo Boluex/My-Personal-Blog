@@ -1,6 +1,6 @@
 from django.urls import path,include
 from.import views
-from .api import views as api_view
+# from .api import views as api_view
 urlpatterns =[
     path('',views.home,name='home'),
     path('create/',views.create,name='create'),
@@ -13,10 +13,10 @@ urlpatterns =[
     path('new_update/<int:id>',views.new_update,name='updates'),
     path('comment/<int:id>',views.comments,name='comment'),
 
-    #rest_framework urls
-    path('api_detail/<int:id>', api_view.api_detail, name='api_detail'),
-    path('api_update/<int:id>', api_view.api_update, name='api_update'),
-    path('api_delete/<int:id>', api_view.api_delete, name='api_delete'),
-    path('api_home/', api_view.api_home.as_view(), name='api_home'),
-    path('api_create/', api_view.api_create, name='api_create'),
+    # #rest_framework urls
+    # path('api_detail/<int:id>', api_view.api_detail, name='api_detail'),
+    # path('api_update/<int:id>', api_view.api_update, name='api_update'),
+    # path('api_delete/<int:id>', api_view.api_delete, name='api_delete'),
+    # path('api_home/', api_view.api_home.as_view(), name='api_home'),
+    # path('api_create/', api_view.api_create, name='api_create'),
 ]
