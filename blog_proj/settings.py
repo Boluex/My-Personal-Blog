@@ -124,8 +124,10 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL = '/files/'
 MEDIA_ROOT='files'
+STATIC_ROOT='staticfiles'
 STATICFILES_DIR =[
-    BASE_DIR/'files'
+    BASE_DIR/'files',
+    BASE_DIR/'staticfiles'
 ]
 AUTH_USER_MODEL='blog.custom_user'
 # Default primary key field type
