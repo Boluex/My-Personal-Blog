@@ -25,13 +25,15 @@ def register(request):
                 messages.error(request,'number taken')
                 return redirect('register')
             else:
-                store = custom_user.objects.create_user(username=username,email=email,number=number,password=pass1)
+                store = custom_user(username=username,email=email,number=number)
+                store.set_password(pass1)
+                store.save()
                 # send_mail(
                 #     'Greetings from blogify',
                 #     f'Welcome {username}, to the the best blog site,with latest and trending topics,we are 100% sure you will like it',
                 #     settings.EMAIL_HOST_USER, [email], fail_silently=False
                 # )
-                store.save()
+                
                 user = authenticate(request,username=username,password=pass1)
                 if user is not None:
                     login(request,user)
