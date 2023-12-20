@@ -5,7 +5,7 @@ from blog.models import custom_user
 class profile_form(ModelForm):
     class Meta:
         model=profile
-        fields =['image','location','about','about','business_info','business_link']
+        fields =['image',]
 
 class user_form(ModelForm):
     class Meta:

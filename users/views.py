@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.conf import settings
 from.models import profile
+from blog.models import comment
 # Create your views here.
 def register(request):
     if request.method == 'POST':
@@ -88,4 +89,5 @@ def update_profile(request):
 def profile_post(request,**kwargs):
     grab = get_object_or_404(custom_user,username=kwargs.get('username'))
     store=post.objects.filter(author=grab)
-    return render(request,'users/profile_post.html',{'posts':store})
+    filter_comments=comment.objects.filter(author=grab)
+    return render(request,'users/profile_post.html',{'comments':filter_comments})
