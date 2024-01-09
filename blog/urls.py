@@ -2,7 +2,7 @@ from django.urls import path,include
 from.import views
 # from .api import views as api_view
 urlpatterns =[
-    path('',views.home,name='home'),
+    path('',views.home.as_view(),name='home'),
     path('create/',views.create,name='create'),
     path('about/',views.about,name='about'),
     path('add_comment/<int:id>',views.add_comment,name='add_comment'),
