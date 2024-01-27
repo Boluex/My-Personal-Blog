@@ -18,3 +18,9 @@ class comment(models.Model):
     content=models.CharField(max_length=200)
     date_posted=models.DateTimeField(auto_now_add=True)
 
+class devops_db(models.Model):
+     author=models.ForeignKey(custom_user,on_delete=models.CASCADE)
+     image=models.ImageField(upload_to='devops_images',blank=True)
+     text=models.TextField()
+     title=models.CharField(max_length=6000)
+     date_posted=models.DateTimeField(default=timezone.now)

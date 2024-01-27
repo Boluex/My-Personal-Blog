@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect,get_object_or_404
-from.models import post,comment
+from.models import post,comment,devops_db
 from django.contrib import messages
 from django.urls import reverse
 from.forms import renew,change
@@ -34,6 +34,14 @@ class home(ListView):
     ordering = ['-date_posted']
     paginate_by = 3
 
+
+class devops(ListView):
+    model = devops_db
+    template_name = 'blog/devops.html'  # <app>/<model>_<viewtype>.html
+    context_object_name = 'posts'
+    ordering = ['-date_posted']
+    paginate_by = 3
+    # return HttpResponse('it is working')
 
 
 def about(request):
